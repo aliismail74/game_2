@@ -1,0 +1,246 @@
+/* Reset and base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f0f0f0;
+}
+
+/* Number display */
+.number {
+  background: #4a4a74;
+  color: #fff;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 70px;
+  margin: auto;
+  border-radius: 10px;
+}
+
+/* Control buttons overlay */
+.control-buttons {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: rgba(3, 169, 244, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.control-buttons span {
+  background: #f44336;
+  color: #fff;
+  padding: 15px 25px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Info container */
+.info-container {
+  max-width: 1080px;
+  margin: 20px auto 0;
+  background: #f6f6f6;
+  padding: 20px;
+  font-size: 24px;
+  overflow: hidden;
+  border: 2px solid #2196f3;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.info-container .name,
+.info-container .tries {
+  flex: 1 1 45%;
+  text-align: center;
+  margin: 10px 0;
+}
+
+/* Memory game blocks container */
+.memory-game-blocks {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 أعمدة */
+  grid-template-rows: repeat(4, 1fr);   /* 4 صفوف */
+  gap: 10px;
+  max-height: 100vh;
+  overflow: hidden;
+  max-width: 95vw;
+  margin: 20px auto;
+}
+
+/* Each game block */
+.memory-game-blocks .game-block {
+  height: calc((100vh - 60px) / 4 - 10px); /* تقسيم ارتفاع الشاشة على 4 صفوف مع خصم الفراغات */
+  aspect-ratio: 1 / 1; /* البلوك مربع */
+  margin: 0;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+  background: #ccc;
+}
+
+/* Prevent clicking when needed */
+.memory-game-blocks.no-clicking {
+  pointer-events: none;
+}
+
+/* Front face */
+.memory-game-blocks .game-block .front {
+  background: #333;
+  line-height: normal;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 8vw;
+  color: white;
+  backface-visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.memory-game-blocks .game-block .front::before {
+  content: "?";
+  font-weight: bold;
+}
+
+/* Back face */
+.memory-game-blocks .game-block .back {
+  background: #607d88;
+  transform: rotateY(180deg);
+  border-radius: 10px;
+  backface-visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.memory-game-blocks .game-block .back .number {
+  width: 60%;
+  height: 60%;
+  font-size: 6vw;
+  color: white;
+  user-select: none;
+}
+
+/* Flip effect */
+.memory-game-blocks .game-block.is-flipped {
+  transform: rotateY(180deg);
+}
+
+/* Game over overlay */
+.game-over {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  width: 100vw;
+  height: 100vh;
+  font-size: 40px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  cursor: pointer;
+  user-select: none;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .memory-game-blocks {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  .memory-game-blocks .game-block {
+    height: calc((100vh - 70px) / 4 - 10px);
+  }
+
+  .memory-game-blocks .game-block .front {
+    font-size: 7vw;
+  }
+
+  .memory-game-blocks .game-block .back .number {
+    font-size: 5vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .info-container {
+    max-width: 95%;
+    font-size: 18px;
+    flex-direction: column;
+  }
+
+  .info-container .name,
+  .info-container .tries {
+    flex: 1 1 100%;
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  .memory-game-blocks {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  .memory-game-blocks .game-block {
+    height: calc((100vh - 80px) / 4 - 10px);
+  }
+
+  .memory-game-blocks .game-block .front {
+    font-size: 6vw;
+  }
+
+  .memory-game-blocks .game-block .back .number {
+    font-size: 4vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .memory-game-blocks {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+  }
+
+  .memory-game-blocks .game-block {
+    height: calc((100vh - 90px) / 7 - 10px);
+  }
+
+  .memory-game-blocks .game-block .front {
+    font-size: 5vw;
+  }
+
+  .memory-game-blocks .game-block .back .number {
+    font-size: 3.5vw;
+  }
+}
