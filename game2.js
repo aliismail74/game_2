@@ -84,7 +84,7 @@ function checkMatchedBlocks(firstBlock, secondBlock) {
       secondBlock.classList.remove("is-flipped");
     }, duration);
 
-    if (triesCount >= 15) {
+    if (triesCount >= 10) {
       setTimeout(() => {
         showGameOver();
       }, duration);
